@@ -16,13 +16,15 @@ const createIssueSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  console.log('server')
   const body = await request.json();
-
+  console.log(body)
   const validation = createIssueSchema.safeParse(body);
 
   if (!validation.success)
     return NextResponse.json(validation.error, { status: 400 });
 
+  console.log(await prisma.issue.findMany())
   const newIssue = await prisma.issue.create({
     data: {
       title: body.title,

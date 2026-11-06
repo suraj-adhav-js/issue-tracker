@@ -29,18 +29,15 @@ const NewIssuePage = () => {
     <form
       className="max-w-xl space-y-2"
       onSubmit={handleSubmit(async (data) => {
-        if(isLoading) return;
+        if (isLoading) return;
 
         try {
           setLoading(true);
-          console.log(data);
           await axios.post("/api/issues", data);
           setLoading(false);
-
           reset();
         } catch (err) {
           setLoading(false);
-          console.log(err);
         }
       })}
     >
@@ -55,10 +52,9 @@ const NewIssuePage = () => {
           <SimpleMDE placeholder="Description" {...field} />
         )}
       />
-      <Button type="submit"> 
+      <Button type="submit">
         Sumbit {isLoading && <Spinner size={"1"}></Spinner>}
       </Button>
-       
     </form>
   );
 };
