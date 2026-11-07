@@ -1,50 +1,80 @@
 "use client";
 import dynamic from "next/dynamic";
-import { TextArea, TextField, Button, Spinner } from "@radix-ui/themes";
+import {
+  TextArea,
+  TextField,
+  Button,
+  Spinner,
+  Callout,
+} from "@radix-ui/themes";
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
+import { createIssueSchema } from "../../validationSchema";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { BiSolidError } from "react-icons/bi";
+import { useEffect, useState } from "react";
+import ErrorMessage from "@/app/components/ErrorMessage";
 
-interface IssueForm {
-  title: string;
-  description: string;
-}
+type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitted, isSubmitSuccessful, isSubmitting },
     control,
-  } = useForm<IssueForm>();
+  } = useForm<IssueForm>({
+    resolver: zodResolver(createIssueSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+    },
+  });
 
-  const [isLoading, setLoading] = useState(false);
+  // useEffect(() => {
+  //   if (isSubmitSuccessful) {
+  //     reset({ title: "", description: "" });
+  //     router.push("/");
+  //   }
+  //   console.log("debug", isSubmitted);
+  // }, [isSubmitSuccessful, reset, router]);
 
+  const [serverError, setServerError] = useState("");
   return (
     <form
       className="max-w-xl space-y-2"
       onSubmit={handleSubmit(async (data) => {
-        if (isLoading) return;
-
+        console.log('hello')
         try {
-          setLoading(true);
           await axios.post("/api/issues", data);
-          setLoading(false);
           reset();
         } catch (err) {
-          setLoading(false);
+          setServerError("Something went wrong. Please try again.");
+          throw err;
         }
       })}
     >
+
+      {serverError && (
+        <Callout.Root>
+          <Callout.Icon>
+            <BiSolidError />
+          </Callout.Icon>
+          <Callout.Text>{serverError}</Callout.Text>
+        </Callout.Root>
+      )}
       <TextField.Root
         placeholder="Title"
         {...register("title")}
       ></TextField.Root>
+      <ErrorMessage>{errors.title?.message}</ErrorMessage>
+
       <Controller
         name="description"
         control={control}
@@ -52,8 +82,10 @@ const NewIssuePage = () => {
           <SimpleMDE placeholder="Description" {...field} />
         )}
       />
+      <ErrorMessage>{errors.description?.message}</ErrorMessage>
+
       <Button type="submit">
-        Sumbit {isLoading && <Spinner size={"1"}></Spinner>}
+        Submit {isSubmitting && <Spinner size={"1"}></Spinner>}
       </Button>
     </form>
   );

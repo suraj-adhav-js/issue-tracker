@@ -10,6 +10,7 @@
     "postinstall": "prisma skills sync || exit 0"
   },
   "dependencies": {
+    "@hookform/resolvers": "^7.0.3",
     "@prisma/adapter-mariadb": "^7.10.1",
     "@prisma/client": "^7.10.1",
     "@radix-ui/themes": "^3.3.0",

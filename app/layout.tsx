@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Theme  } from "@radix-ui/themes";
+import { Container, Theme  } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import './theme-config.css'
 import "./globals.css";
@@ -23,9 +23,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Theme accentColor="yellow">
+        <Theme accentColor="yellow">  
           <NavBar />
-          <main className="p-3">{children}</main>
+          <main>
+            <Container size="4" px="4">
+              {children}
+            </Container>
+          </main>
         </Theme>
       </body>
     </html>
