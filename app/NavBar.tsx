@@ -21,7 +21,7 @@ const NavBar = () => {
           <Image
             src={issues_tracker}
             alt="issues tracker logo"
-            className="w-200 lg:w-50 py-2"
+            className="max-w-50 py-2"
           ></Image>
         </Link>
 

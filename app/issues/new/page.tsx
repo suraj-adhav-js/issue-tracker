@@ -26,7 +26,7 @@ const NewIssuePage = () => {
   const [serverError, setServerError] = useState("");
   const {
     register,
-    handleSubmit, 
+    handleSubmit,
     reset,
     formState: { errors, isSubmitSuccessful, isSubmitting },
     control,
@@ -51,7 +51,7 @@ const NewIssuePage = () => {
 
   useEffect(() => {
     if (isSubmitSuccessful) {
-      reset({ title: "", description: "" }); //reset
+      reset(); //reset
     }
   }, [isSubmitSuccessful, reset]);
 
