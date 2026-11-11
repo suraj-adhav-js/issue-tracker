@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import IssueActions from "./IssueActions";
 
-const IssuePage = async () => {
+const IssuesPage = async () => {
   const issues = [0,1,2,3,4,5,6,7,8,9];
 
   return (
@@ -48,4 +48,4 @@ const IssuePage = async () => {
   );
 };
 
-export default IssuePage;
+export default IssuesPage;

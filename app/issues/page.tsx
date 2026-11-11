@@ -5,8 +5,8 @@ import StatusBedge from "../components/StatusBedge";
 import delay from 'delay'
 import IssueActions from "./IssueActions";
 
-const IssuePage = async () => {
-  await delay(1000*60)
+const IssuesPage = async () => {
+  
   const issues = await prisma.issue.findMany();
 
   return (
@@ -50,4 +50,4 @@ const IssuePage = async () => {
   );
 };
 
-export default IssuePage;
+export default IssuesPage;
