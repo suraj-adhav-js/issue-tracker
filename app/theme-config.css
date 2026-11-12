@@ -1,3 +1,13 @@
 .radix-themes {
-	--default-font-family: var(--font-inter);
+  --default-font-family: var(--font-inter);
+}
+.radix-themes[data-accent-color="yellow"] {
+  --accent-contrast: #000; /* text on solid buttons */
+  --accent-11: #000; /* accent link/text color (solid) */
+  --accent-a11: #000; /* accent link/text color (alpha version) */
+  --accent-12: #000; /* high-contrast text */
+}
+
+.rt-Link {
+  text-decoration-color: gray;
 }

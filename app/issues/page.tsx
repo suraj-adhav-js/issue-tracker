@@ -4,7 +4,7 @@ import { Badge, Button, Table } from "@radix-ui/themes";
 import StatusBedge from "../components/StatusBedge";
 import delay from 'delay'
 import IssueActions from "./IssueActions";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 
 const IssuesPage = async () => {
   
