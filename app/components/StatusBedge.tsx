@@ -4,6 +4,7 @@ import { Badge } from "@radix-ui/themes";
 
 interface Props {
   status: Status;
+  className?: string
 }
 
 const statusMap: Record<
@@ -15,9 +16,9 @@ const statusMap: Record<
   CLOSED: { label: "Closed", color: "green" },
 };
 
-const StatusBedge = ({ status }: Props) => {
+const StatusBedge = ({ status, className }: Props) => {
   return (
-    <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
+    <Badge color={statusMap[status].color} className={className}>{statusMap[status].label}</Badge>
   );
 };
 
