@@ -4,7 +4,7 @@ import StatusBedge from "@/app/components/StatusBedge";
 import prisma from "@/prisma/client";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
-
+import ReactMarkdown from 'react-markdown'
 interface Props {
   params: Promise<{ id: string }>;
 }
@@ -26,8 +26,8 @@ const IssueDetailPage = async ({ params }: Props) => {
         <StatusBedge status={issue.status} className="opacity-100"/>
         <p className="text-gray-500 text-sm">{issue.createdAt.toLocaleString("en-IN", {dateStyle: 'full', timeStyle: "short"} )}</p>
       </Flex>
-      <Card className="max-w-[60ch]">
-        <p className="whitespace-pre-wrap">{issue.description}</p>
+      <Card className="prose max-w-[60ch]">
+        <ReactMarkdown>{issue.description}</ReactMarkdown>
       </Card>
     </article>
   );
