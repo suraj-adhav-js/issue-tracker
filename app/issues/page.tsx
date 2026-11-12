@@ -1,8 +1,7 @@
 "use cache";
 import prisma from "@/prisma/client";
-import { Badge, Button, Table } from "@radix-ui/themes";
-import StatusBedge from "../components/StatusBedge";
-import delay from 'delay'
+import { Table } from "@radix-ui/themes";
+import {StatusBedge} from "../components";
 import IssueActions from "./IssueActions";
 import Link from "@/app/components/Link";
 

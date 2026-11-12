@@ -1,8 +1,5 @@
-import Skeleton from "@/app/components/Skeleton";
-import StatusBedge from "@/app/components/StatusBedge";
-import { Heading, Flex, Card } from "@radix-ui/themes";
-import React from "react";
-import ReactMarkdown from "react-markdown";
+import { Skeleton } from "@/app/components";
+import { Card, Flex, Heading } from "@radix-ui/themes";
 
 const IssueDetailLoadingPage = () => {
   return (

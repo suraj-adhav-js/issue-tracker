@@ -18,7 +18,7 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BiSolidError } from "react-icons/bi";
 import { useEffect, useState } from "react";
-import ErrorMessage from "@/app/components/ErrorMessage";
+import { ErrorMessage } from "@/app/components";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 

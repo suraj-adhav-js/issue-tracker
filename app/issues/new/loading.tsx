@@ -1,4 +1,4 @@
-import Skeleton from "@/app/components/Skeleton";
+import {Skeleton} from "@/app/components";
 
 const NewIssueLoadingPage = () => {
   return (

@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import SkeletonComp from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
@@ -16,3 +15,4 @@ const Skeleton = ({count,width, height, className}: Props) => {
 }
 
 export default Skeleton
+

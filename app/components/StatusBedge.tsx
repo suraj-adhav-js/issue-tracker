@@ -1,6 +1,5 @@
-import React from "react";
-import { Status } from "../generated/prisma/enums";
 import { Badge } from "@radix-ui/themes";
+import { Status } from "../generated/prisma/enums";
 
 interface Props {
   status: Status;

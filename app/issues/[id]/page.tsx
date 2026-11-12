@@ -1,6 +1,6 @@
 "use cache";
 
-import StatusBedge from "@/app/components/StatusBedge";
+import {StatusBedge} from "@/app/components";
 import prisma from "@/prisma/client";
 import { Card, Heading } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
