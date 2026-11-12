@@ -4,6 +4,7 @@ import { Badge, Button, Table } from "@radix-ui/themes";
 import StatusBedge from "../components/StatusBedge";
 import delay from 'delay'
 import IssueActions from "./IssueActions";
+import Link from "next/link";
 
 const IssuesPage = async () => {
   
@@ -30,7 +31,7 @@ const IssuesPage = async () => {
             return (
               <Table.Row key={issue.id} className="md:flex">
                 <Table.RowHeaderCell className="md:flex-1"> 
-                  {issue.title}{" "}
+                  <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
                   <div className="md:hidden">
                     <StatusBedge status={issue.status} />
                   </div>
