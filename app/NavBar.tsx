@@ -5,7 +5,9 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import classnames from "classnames";
 import { Box, Container, Flex } from "@radix-ui/themes";
-const NavBar = () => {
+import { Suspense } from "react";
+
+const NavLinks = () => {
   const currentPath = usePathname();
 
   const links = [
@@ -14,35 +16,48 @@ const NavBar = () => {
   ];
 
   return (
+    <>
+      {links.map((link) => {
+        return (
+          <li key={link.label}>
+            <Link
+              className={classnames({
+                "text-zinc-900": currentPath === link.href,
+                "text-zinc-500": currentPath !== link.href,
+                " hover:text-zinc-800 transition-color text-sm md:text-lg": true,
+              })}
+              href={link.href}
+            >
+              {link.label}
+            </Link>
+          </li>
+        );
+      })}
+    </>
+  );
+};
+
+const NavBar = () => {
+  return (
     <nav className="border-b border-gray-200 mb-5">
       <Container size="4" px="4">
         <Flex align={"center"} justify={"between"}>
-        <Link href="/" className="flex flex-row items-center gap-1 font-bold ">
-          <Image
-            src={issues_tracker}
-            alt="issues tracker logo"
-            className="max-w-50 py-2"
-          ></Image>
-        </Link>
+          <Link
+            href="/"
+            className="flex flex-row items-center gap-1 font-bold "
+          >
+            <Image
+              src={issues_tracker}
+              alt="issues tracker logo"
+              className="max-w-50 py-2"
+            ></Image>
+          </Link>
 
-        <ul className="flex justify-around gap-6">
-          {links.map((link) => {
-            return (
-              <li key={link.label}>
-                <Link
-                  className={classnames({
-                    "text-zinc-900": currentPath === link.href,
-                    "text-zinc-500": currentPath !== link.href,
-                    " hover:text-zinc-800 transition-color text-sm md:text-lg": true,
-                  })}
-                  href={link.href}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+          <ul className="flex justify-around gap-6">
+            <Suspense>
+              <NavLinks/>
+            </Suspense>
+          </ul>
         </Flex>
       </Container>
     </nav>
