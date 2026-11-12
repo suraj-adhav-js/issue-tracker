@@ -1,22 +1,23 @@
-'use cache'
+"use cache";
 
-import prisma  from "@/prisma/client";
+import prisma from "@/prisma/client";
+import { notFound } from "next/navigation";
 
-interface Props{
-    params: Promise<{id: string}>
+interface Props {
+  params: Promise<{ id: string }>;
 }
 
-const IssueDetailPage = async({params}: Props) => {
-    const {id} = await params;
+const IssueDetailPage = async ({ params }: Props) => {
+  const { id } = await params;
+     
+  if (Number.isNaN(Number(id))) notFound();
+  
+  const issue = await prisma.issue.findUnique({
+    where: { id: Number(id) },
+  });
 
-    const issue = await prisma.issue.findUnique({
-        where: { id: Number(id)}
-    });
-  return (
-    <div>
-        {issue?.title}
-    </div>
-  )
-}
+  if (!issue) notFound();
+  return <div>{issue?.title}</div>;
+};
 
-export default IssueDetailPage
+export default IssueDetailPage;
