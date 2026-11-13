@@ -2,7 +2,7 @@
 
 import { StatusBedge } from "@/app/components";
 import prisma from "@/prisma/client";
-import { Button, Card, Heading } from "@radix-ui/themes";
+import { Button, Card } from "@radix-ui/themes";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
@@ -11,6 +11,7 @@ interface Props {
 }
 
 const IssueDetailPage = async ({ params }: Props) => {
+  
   const { id } = await params;
 
   if (Number.isNaN(Number(id))) notFound();

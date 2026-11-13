@@ -1,23 +1,47 @@
-import { Skeleton } from "@/app/components";
-import { Card, Flex, Heading } from "@radix-ui/themes";
+import { Skeleton, StatusBedge } from "@/app/components";
+import { Button, Card, Flex, Heading, Link } from "@radix-ui/themes";
+import ReactMarkdown from "react-markdown";
 
 const IssueDetailLoadingPage = () => {
-  return (
-    <article>
-      <Heading mt={"5"} mb={"2"} className="capitalize max-w-[32ch]" size={"8"}>
-        <Skeleton />
-      </Heading>
-      <Flex gap={"2"} align={"center"} mb={"6"}>
-        <Skeleton width="4rem" height="1rem" />
-        <p className="text-gray-500 text-sm">
-          <Skeleton width="10rem" height="1rem" />
-        </p>
-      </Flex>
-      <Card className="prose max-w-[60ch]">
-        <Skeleton count={5} />
-      </Card>
-    </article>
-  );
+  return  (<div>
+        <article className="flex flex-col md:flex-row gap-8">
+          <Card
+            size={{ initial: "3", md: "4" }}
+            className="border-0! flex-7/10 px-8 py-10"
+          >
+            <h1 className="capitalize text-2xl md:text-4xl font-extrabold mb-5 border-b border-gray-300 pb-5">
+              <Skeleton/>
+            </h1>
+             
+            <div className="prose max-w-none text-[16px]">
+              <Skeleton count={5}/>
+            </div>
+          </Card>
+          <div className="flex-3/10">
+            <Card size="3">
+              <h3><Skeleton width="5rem"/></h3>
+              <div className="mt-7 mb-5 text-[0.9rem] [&>div]:border-b [&>div]:border-gray-300 [&>div]:py-1.5 ">
+                <div>
+                   <Skeleton/>
+                </div>
+                <div>
+                   <Skeleton/>
+                  
+                </div>
+                <div>
+                   <Skeleton/>
+                </div>
+              </div>
+  
+              <div className="flex flex-col gap-2">
+                 <Skeleton/>
+                 <Skeleton/>
+              </div>
+            </Card>
+          </div>
+        </article>
+      </div>
+    );
 };
 
 export default IssueDetailLoadingPage;
