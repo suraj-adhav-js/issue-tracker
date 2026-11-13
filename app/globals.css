@@ -7,6 +7,14 @@
   --font-inter: var(--font-inter);
 }
 
+h1,h2,h3,h4,h5,h5{
+  font-weight: 800;
+  color: #101828;
+}
+
+p{
+  color: #191c24;
+}
 /* :root {
   --background: #ffffff;
   --foreground: #171717;
