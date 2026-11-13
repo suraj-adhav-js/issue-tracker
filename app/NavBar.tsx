@@ -39,7 +39,7 @@ const NavLinks = () => {
 
 const NavBar = () => {
   return (
-    <nav className="border-b border-gray-200 mb-5">
+    <nav className="border-b border-gray-200 mb-10">
       <Container size="4" px="4">
         <Flex align={"center"} justify={"between"}>
           <Link

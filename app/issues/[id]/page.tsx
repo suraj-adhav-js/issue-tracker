@@ -22,7 +22,7 @@ const IssueDetailPage = async ({ params }: Props) => {
   if (!issue) notFound();
   return (
     <div>
-      <article className="flex flex-col md:flex-row gap-8  mt-5">
+      <article className="flex flex-col md:flex-row gap-8">
         <Card
           size={{ initial: "3", md: "4" }}
           className="border-0! flex-7/10 px-8 py-10"
@@ -31,9 +31,9 @@ const IssueDetailPage = async ({ params }: Props) => {
             {issue.title}
           </h1>
            
-          <p className="prose max-w-none text-[16px]">
-            <ReactMarkdown>{issue.description}</ReactMarkdown>
-          </p>
+          <div className="prose max-w-none text-[16px]">
+            <ReactMarkdown >{issue.description}</ReactMarkdown>
+          </div>
         </Card>
         <div className="flex-3/10">
           <Card size="3">
