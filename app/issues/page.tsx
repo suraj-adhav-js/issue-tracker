@@ -1,25 +1,28 @@
-"use cache";
 import prisma from "@/prisma/client";
 import { Table } from "@radix-ui/themes";
-import {StatusBedge} from "../components";
+import { StatusBedge } from "../components";
 import IssueActions from "./IssueActions";
 import Link from "@/app/components/Link";
+import { connection } from "next/server";
+ 
 
 const IssuesPage = async () => {
-  
+  await connection();
   const issues = await prisma.issue.findMany();
 
   return (
     <>
-      <IssueActions/>
+      <IssueActions />
 
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row className="md:flex">
-            <Table.ColumnHeaderCell className="md:flex-1 ">Issue Name</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className="md:flex-1 ">
+              Issue Name
+            </Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell className="hidden md:table-cell md:flex-none md:min-w-32.5 text-center">
               Status
-            </Table.ColumnHeaderCell> 
+            </Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell className="hidden md:table-cell md:flex-none md:min-w-32.5 text-center">
               Created At
             </Table.ColumnHeaderCell>
@@ -29,7 +32,7 @@ const IssuesPage = async () => {
           {issues.map((issue) => {
             return (
               <Table.Row key={issue.id} className="md:flex">
-                <Table.RowHeaderCell className="md:flex-1"> 
+                <Table.RowHeaderCell className="md:flex-1">
                   <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
                   <div className="md:hidden">
                     <StatusBedge status={issue.status} />

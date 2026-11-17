@@ -1,14 +1,15 @@
-"use cache";
-
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import IssueDetail from "./IssueDetail";
 import IssueDetailCard from "./IssueDetailCard";
+import { connection } from "next/server";
+
 interface Props {
   params: Promise<{ id: string }>;
 }
 
 const IssueDetailPage = async ({ params }: Props) => {
+  await connection();
   const { id } = await params;
 
   if (Number.isNaN(Number(id))) notFound();
