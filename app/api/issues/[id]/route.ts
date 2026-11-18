@@ -7,7 +7,7 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-export async function POST(request: NextRequest, { params }: Props) {
+export async function PATCH(request: NextRequest, { params }: Props) {
   const { id } = await params;
 
   const body = await request.json();

@@ -1,12 +1,7 @@
 "use client";
 import { ErrorMessage } from "@/app/components";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Button,
-  Callout,
-  Spinner,
-  TextField
-} from "@radix-ui/themes";
+import { Button, Callout, Spinner, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import dynamic from "next/dynamic";
@@ -16,48 +11,55 @@ import { BiSolidError } from "react-icons/bi";
 import z from "zod";
 import { IssueSchema } from "../../validationSchema";
 import { Issue } from "@/app/generated/prisma/client";
+import { useRouter } from "next/navigation";
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
 type IssueFormDate = z.infer<typeof IssueSchema>;
 
-interface Props{
-  issue?: Issue
+interface Props {
+  issue?: Issue;
 }
 
-const IssueForm = ({issue}: Props) => {
+const IssueForm = ({ issue }: Props) => {
   const [serverError, setServerError] = useState("");
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful, isSubmitting },
+    formState: { errors, isSubmitSuccessful, isSubmitting, isSubmitted },
     control,
   } = useForm<IssueFormDate>({
     resolver: zodResolver(IssueSchema),
     defaultValues: {
-      title: issue === undefined? "" : issue.title,
+      title: issue === undefined ? "" : issue.title,
       description: issue === undefined ? "" : issue.description,
     },
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    if (isSubmitting) return undefined;
     try {
       setServerError("");
-      await axios.post("/api/issues", data);
+      if (issue) {
+        await axios.patch("/api/issues/" + issue.id, data)
+        router.push(`/issues/${issue.id}`);
+        router.refresh();
+      }
+      else await axios.post("/api/issues", data);
     } catch (err) {
       setServerError("Something went wrong. Please try again.");
-      throw err;
+      throw err;  
     }
   });
 
   useEffect(() => {
     if (isSubmitSuccessful && issue === undefined) {
-      reset(); //reset
-    }
-  }, [isSubmitSuccessful, reset]);
+      reset();
+    }  
+  }, [isSubmitSuccessful, issue, reset]);
 
   return (
     <form className="max-w-xl space-y-2" onSubmit={onSubmit}>
