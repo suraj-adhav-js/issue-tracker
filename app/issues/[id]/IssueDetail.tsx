@@ -16,7 +16,7 @@ const IssueDetail = ({issue}: Props) => {
         {issue.title}
       </h1>
 
-      <div className="prose max-w-none text-[16px]">
+      <div className="prose max-w-full text-[16px]">
         <ReactMarkdown>{issue.description}</ReactMarkdown>
       </div>
     </Card>

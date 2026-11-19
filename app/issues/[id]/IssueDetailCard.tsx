@@ -2,6 +2,7 @@ import { StatusBedge } from "@/app/components";
 import { Issue } from "@/app/generated/prisma/client";
 import { Button, Card } from "@radix-ui/themes";
 import Link from "next/link";
+import DeleteIssueButton from "./DeleteIssueButton";
 
 interface Props{
     issue: Issue
@@ -44,9 +45,7 @@ const IssueDetailCard = ({issue}: Props) => {
             Edit Issue
           </Link>
         </Button>
-        <Button color="tomato" variant="outline" asChild>
-          <Link href={`/issues/${issue.id}/edit`}>Delete Issue</Link>
-        </Button>
+        <DeleteIssueButton/>
       </div>
     </Card>
   );
