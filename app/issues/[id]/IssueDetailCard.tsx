@@ -45,7 +45,7 @@ const IssueDetailCard = ({issue}: Props) => {
             Edit Issue
           </Link>
         </Button>
-        <DeleteIssueButton/>
+        <DeleteIssueButton issueId={issue.id}/>
       </div>
     </Card>
   );
