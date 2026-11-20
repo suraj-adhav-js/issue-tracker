@@ -3,9 +3,9 @@ import Link from "next/link";
 import issues_tracker from "@/public/issues-tracker.svg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import classnames from "classnames";
-import { Box, Container, Flex } from "@radix-ui/themes";
+import { Container, Flex } from "@radix-ui/themes";
 import { Suspense } from "react";
+import { useSession } from "next-auth/react";
 
 const NavLinks = () => {
   const currentPath = usePathname();
@@ -36,6 +36,8 @@ const NavLinks = () => {
 };
 
 const NavBar = () => {
+  const { status, data: session } = useSession();
+
   return (
     <nav className="border-b border-gray-200 mb-10">
       <Container size="4" px="4">
@@ -51,11 +53,20 @@ const NavBar = () => {
             ></Image>
           </Link>
 
-          <ul className="flex justify-around gap-6">
-            <Suspense>
-              <NavLinks />
-            </Suspense>
-          </ul>
+          <div>
+            <ul className="flex justify-around gap-6">
+              <Suspense>
+                <NavLinks />
+              </Suspense>
+              <li>
+                {status === "authenticated" ? (
+                  <Link href="/api/auth/signout">Sign Out</Link>
+                ) : (
+                  <Link href="/api/auth/signin">Sign In</Link>
+                )}
+              </li>
+            </ul>
+          </div>
         </Flex>
       </Container>
     </nav>
