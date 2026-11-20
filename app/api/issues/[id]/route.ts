@@ -2,7 +2,6 @@ import { IssueSchema } from "@/app/validationSchema";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
-import delay from 'delay';  
 
 interface Props {
   params: Promise<{ id: string }>;

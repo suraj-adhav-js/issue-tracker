@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Container, Theme  } from "@radix-ui/themes";
+import { Container, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import './theme-config.css'
+import "./theme-config.css";
 import "./globals.css";
 import NavBar from "./NavBar";
+import AuthProvider from "./auth/AuthProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -18,18 +19,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <Theme accentColor="yellow">  
-          <NavBar />
-          <main>
-            <Container size="4" px="4">
-              {children}
-            </Container>
-          </main>
+        <Theme accentColor="yellow">
+          <AuthProvider>
+            <NavBar />
+            <main>
+              <Container size="4" px="4">
+                {children}
+              </Container>
+            </main>
+          </AuthProvider>
         </Theme>
       </body>
     </html>
