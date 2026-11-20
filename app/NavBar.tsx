@@ -21,12 +21,10 @@ const NavLinks = () => {
         return (
           <li key={link.label}>
             <Link
-              className={classnames({
-                "text-zinc-900": currentPath === link.href,
-                "text-zinc-500": currentPath !== link.href,
-                " hover:text-zinc-800 transition-color text-sm md:text-lg": true,
-              })}
               href={link.href}
+              className={`${
+                currentPath === link.href ? "text-zinc-900" : "text-zinc-500 "
+              } transition-color text-sm md:text-lg`}
             >
               {link.label}
             </Link>
@@ -55,7 +53,7 @@ const NavBar = () => {
 
           <ul className="flex justify-around gap-6">
             <Suspense>
-              <NavLinks/>
+              <NavLinks />
             </Suspense>
           </ul>
         </Flex>
