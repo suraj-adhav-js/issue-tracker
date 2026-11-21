@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { BiSolidError } from "react-icons/bi";
 import z from "zod";
-import { IssueSchema } from "../../validationSchema";
+import { IssueSchema } from "../../../validationSchema";
 import { Issue } from "@/app/generated/prisma/client";
 import { useRouter } from "next/navigation";
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {

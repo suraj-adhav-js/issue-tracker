@@ -1,6 +1,6 @@
 import prisma from "@/prisma/client";
 import { Table } from "@radix-ui/themes";
-import { StatusBedge } from "../components";
+import { StatusBedge } from "../../components";
 import IssueActions from "./IssueActions";
 import Link from "@/app/components/Link";
 import { connection } from "next/server";

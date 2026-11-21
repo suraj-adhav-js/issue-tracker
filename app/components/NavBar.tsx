@@ -24,7 +24,7 @@ const NavLinks = () => {
               href={link.href}
               className={`${
                 currentPath === link.href ? "text-zinc-900" : "text-zinc-500 "
-              } transition-color text-sm md:text-lg`}
+              } transition-color`}
             >
               {link.label}
             </Link>
@@ -54,7 +54,7 @@ const NavBar = () => {
           </Link>
 
           <div>
-            <ul className="flex justify-around gap-6">
+            <ul className="flex justify-around gap-6 text-sm md:text-lg">
               <Suspense>
                 <NavLinks />
               </Suspense>

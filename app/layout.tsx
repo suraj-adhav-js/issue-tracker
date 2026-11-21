@@ -1,11 +1,10 @@
+import { Theme } from "@radix-ui/themes";
+import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Container, Theme } from "@radix-ui/themes";
-import "@radix-ui/themes/styles.css";
-import "./theme-config.css";
-import "./globals.css";
-import NavBar from "./NavBar";
 import AuthProvider from "./auth/AuthProvider";
+import "./globals.css";
+import "./theme-config.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,12 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Theme accentColor="yellow">
           <AuthProvider>
-            <NavBar />
-            <main>
-              <Container size="4" px="4">
-                {children}
-              </Container>
-            </main>
+            <main>{children}</main>
           </AuthProvider>
         </Theme>
       </body>
