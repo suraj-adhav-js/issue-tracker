@@ -7,12 +7,17 @@
   --font-inter: var(--font-inter);
 }
 
-h1,h2,h3,h4,h5,h5{
+h1,
+h2,
+h3,
+h4,
+h5,
+h5 {
   font-weight: 800;
   color: #101828;
 }
 
-p{
+p {
   color: #191c24;
 }
 /* :root {
@@ -25,7 +30,7 @@ p{
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-} */ 
+} */
 
 body {
   /* background: var(--background);
@@ -33,4 +38,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
- 
+.gradian-bg {
+  background-color: #fffbe6;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(245, 176, 0, 0.24), transparent 62%),
+    radial-gradient(rgba(21, 21, 21, 0.08) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    14px 14px;
+}

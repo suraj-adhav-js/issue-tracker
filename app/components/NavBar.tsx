@@ -3,10 +3,20 @@ import Link from "next/link";
 import issues_tracker from "@/public/issues-tracker.svg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Container, Flex } from "@radix-ui/themes";
+import {
+  Avatar,
+  Container,
+  DropdownMenu,
+  Flex,
+  Box,
+  Card,
+  Text,
+  Button,
+} from "@radix-ui/themes";
 import { Suspense } from "react";
 import { useSession } from "next-auth/react";
-
+import { signIn, signOut } from "next-auth/react";
+import { PiSignOutBold } from "react-icons/pi";
 const NavLinks = () => {
   const currentPath = usePathname();
 
@@ -37,7 +47,7 @@ const NavLinks = () => {
 
 const NavBar = () => {
   const { status, data: session } = useSession();
-
+  // console.log(status, session)
   return (
     <nav className="border-b border-gray-200 mb-10">
       <Container size="4" px="4">
@@ -59,10 +69,60 @@ const NavBar = () => {
                 <NavLinks />
               </Suspense>
               <li>
-                {status === "authenticated" ? (
-                  <Link href="/api/auth/signout">Sign Out</Link>
-                ) : (
-                  <Link href="/api/auth/signin">Sign In</Link>
+                {status === "authenticated" && (
+                  <DropdownMenu.Root>
+                    <DropdownMenu.Trigger>
+                      <Avatar
+                        size={"2"}
+                        radius="full"
+                        src={session.user!.image!}
+                        fallback="?"
+                      />
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                      {/* <DropdownMenu.Label>
+                        {session.user!.name}
+                      </DropdownMenu.Label> */}
+                      <Flex gap="3" align="center" className="p-2  ">
+                        <Avatar
+                          size="3"
+                          src={session.user!.image!}
+                          radius="full"
+                          fallback="T"
+                        />
+                        <Box>
+                          <Text as="div" size="2" weight="bold">
+                            {session.user!.name}
+                          </Text>
+                          <Text as="div" size="2" color="gray">
+                            {session.user!.email}
+                          </Text>
+                        </Box>
+                      </Flex>
+                         <span className="block w-full h-0.75 border-b border-gray-300 mb-2"></span>
+
+                       
+                      <DropdownMenu.Item>
+                        <Link
+                          onClick={() => signOut()}
+                          href="/api/auth/signin"
+                          className="flex items-center gap-2"
+                        >
+                          <PiSignOutBold />
+                          Sign Out
+                        </Link>
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Root>
+                )}
+
+                {status === "unauthenticated" && (
+                  <Button className="" onClick={() => signIn()}>
+                    Sign In
+                  </Button>
+                  // <Link onClick={() => signIn()} href="/api/auth/signin">
+                  //   Sign In
+                  // </Link>
                 )}
               </li>
             </ul>
