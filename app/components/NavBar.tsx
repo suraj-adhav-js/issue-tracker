@@ -13,7 +13,9 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Suspense } from "react";
 import { PiSignOutBold } from "react-icons/pi";
+import Skeleton from "./Skeleton";
 
 const NavBar = () => {
   return (
@@ -32,8 +34,10 @@ const NavBar = () => {
           </Link>
 
           <div className="flex justify-around gap-6 text-sm md:text-lg">
-            <NavLinks />
-            <AuthStatus/>
+            <Suspense fallback={<LinkList currentPath={null} />}>
+              <NavLinks />
+            </Suspense>
+            <AuthStatus />
           </div>
         </Flex>
       </Container>
@@ -43,12 +47,14 @@ const NavBar = () => {
 
 const NavLinks = () => {
   const currentPath = usePathname();
+  return <LinkList currentPath={currentPath} />;
+};
 
+const LinkList = ({ currentPath }: { currentPath?: string | null }) => {
   const links = [
     { label: "Dashboard", href: "/dashboard" },
     { label: "Issues", href: "/issues" },
   ];
-
   return (
     <ul className="flex gap-7">
       {links.map((link) => {
@@ -73,7 +79,7 @@ const AuthStatus = () => {
   const { status, data: session } = useSession();
 
   if (status === "loading") {
-    return null;
+    return <Skeleton width="4rem"  />;
   }
 
   if (status === "unauthenticated") {
