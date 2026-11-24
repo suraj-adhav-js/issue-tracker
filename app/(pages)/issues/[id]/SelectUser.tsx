@@ -1,24 +1,41 @@
 "use client";
+import { Skeleton } from "@/app/components";
 import { User } from "@/app/generated/prisma/client";
 import { Avatar, Box, Card, Flex, Select } from "@radix-ui/themes";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { PiUserCircleDashedLight } from "react-icons/pi";
 
 const SelectUser = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const {
+    data: users,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => axios.get<User[]>("/api/users").then((res) => res.data),
+    staleTime: 60 * 1000,
+    retry: 3,
+  });
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const res = await axios.get("/api/users");
-      setUsers(res.data);
-    };
-    getUsers();
-  }, []);
+  const generateInitial = (user: string = "??") => {
+    return user
+      ?.split(" ")
+      .slice(0, 2)
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase();
+  };
 
-  const generateInitial = (user: string = "??")=>{
-    return user?.split(" ").slice(0,2).map((word)=>word[0]).join("").toUpperCase();
-  }
+  if (isLoading)
+    return (
+      <Card size="3">
+        <Skeleton />
+      </Card>
+    );
+
+  if (error) return null;
 
   return (
     <Card size="3">
@@ -28,30 +45,30 @@ const SelectUser = () => {
           <Select.Trigger />
           <Select.Content position="popper">
             <Select.Group>
-              <Select.Label  className="p-0 m-0">Suggestion</Select.Label>
-              <Select.Separator  />
+              <Select.Label className="p-0 m-0">Suggestion</Select.Label>
+              <Select.Separator />
               <Select.Item value="null">
                 <div className="flex flex-row gap-2 items-center">
-                  <PiUserCircleDashedLight color="gray" opacity={0.9} size="25px"/>
+                  <PiUserCircleDashedLight
+                    color="gray"
+                    opacity={0.9}
+                    size="25px"
+                  />
                   <span>Unassigned</span>
                 </div>
               </Select.Item>
               {users.map((user) => {
                 return (
-                  <Select.Item
-                    key={user.id}
-                    value={user.id}
-                     
-                  >
+                  <Select.Item key={user.id} value={user.id}>
                     <div className="flex items-center gap-2">
-                        <Avatar
-                      src={user.image!}
-                      size="1"
-                      radius="full"
-                      fallback={generateInitial(user.name!)}
-                      className=" border border-gray-300"
-                    ></Avatar>
-                    <span className="capitalize">{user.name}</span>
+                      <Avatar
+                        src={user.image!}
+                        size="1"
+                        radius="full"
+                        fallback={generateInitial(user.name!)}
+                        className=" border border-gray-300"
+                      ></Avatar>
+                      <span className="capitalize">{user.name}</span>
                     </div>
                   </Select.Item>
                 );
