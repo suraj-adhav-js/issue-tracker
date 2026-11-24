@@ -3,12 +3,16 @@ import { Issue } from "@/app/generated/prisma/client";
 import { Button, Card } from "@radix-ui/themes";
 import Link from "next/link";
 import DeleteIssueButton from "./DeleteIssueButton";
+import { useSession } from "next-auth/react";
+import authOptions from "@/app/auth/authOptions";
+import { getServerSession } from "next-auth";
 
-interface Props{
-    issue: Issue
+interface Props {
+  issue: Issue;
 }
 
-const IssueDetailCard = ({issue}: Props) => {
+const IssueDetailCard = async ({ issue }: Props) => {
+  const session = await getServerSession(authOptions);
   return (
     <Card size="3">
       <h3>Details</h3>
@@ -38,15 +42,16 @@ const IssueDetailCard = ({issue}: Props) => {
           </span>
         </div>
       </div>
-
-      <div className="flex flex-col gap-2">
-        <Button asChild>
-          <Link className=" " href={`/issues/${issue.id}/edit`}>
-            Edit Issue
-          </Link>
-        </Button>
-        <DeleteIssueButton issueId={issue.id}/>
-      </div>
+      {session && (
+        <div className="flex flex-col gap-2">
+          <Button asChild>
+            <Link className=" " href={`/issues/${issue.id}/edit`}>
+              Edit Issue
+            </Link>
+          </Button>
+          <DeleteIssueButton issueId={issue.id} />
+        </div>
+      )}
     </Card>
   );
 };

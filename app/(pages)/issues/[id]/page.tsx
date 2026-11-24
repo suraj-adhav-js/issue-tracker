@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import IssueDetail from "./IssueDetail";
 import IssueDetailCard from "./IssueDetailCard";
 import { connection } from "next/server";
+import SelectUser from "./SelectUser";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -25,8 +26,9 @@ const IssueDetailPage = async ({ params }: Props) => {
         <div className="flex-7/10">
           <IssueDetail issue={issue} />
         </div>
-        <div className="flex-3/10">
+        <div className="flex-3/10 flex flex-col gap-3">
           <IssueDetailCard issue={issue} />
+          <SelectUser/>
         </div>
       </article>
     </div>
