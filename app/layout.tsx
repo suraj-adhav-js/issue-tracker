@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import AuthProvider from "./auth/AuthProvider";
 import "./globals.css";
 import "./theme-config.css";
+import QueryClientProvider from "./QueryClientProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,9 +22,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Theme accentColor="yellow">
-          <AuthProvider>
-            <main>{children}</main>
-          </AuthProvider>
+          <QueryClientProvider>
+            <AuthProvider>
+              <main>{children}</main>
+            </AuthProvider>
+          </QueryClientProvider>
         </Theme>
       </body>
     </html>

@@ -15,6 +15,11 @@ const SelectUser = () => {
     };
     getUsers();
   }, []);
+
+  const generateInitial = (user: string = "??")=>{
+    return user?.split(" ").slice(0,2).map((word)=>word[0]).join("").toUpperCase();
+  }
+
   return (
     <Card size="3">
       <Flex direction="column">
@@ -23,8 +28,8 @@ const SelectUser = () => {
           <Select.Trigger />
           <Select.Content position="popper">
             <Select.Group>
-              <Select.Label>Fruits</Select.Label>
-              <Select.Separator />
+              <Select.Label  className="p-0 m-0">Suggestion</Select.Label>
+              <Select.Separator  />
               <Select.Item value="null">
                 <div className="flex flex-row gap-2 items-center">
                   <PiUserCircleDashedLight color="gray" opacity={0.9} size="25px"/>
@@ -43,7 +48,7 @@ const SelectUser = () => {
                       src={user.image!}
                       size="1"
                       radius="full"
-                      fallback={user.name!.slice(0, 1)}
+                      fallback={generateInitial(user.name!)}
                       className=" border border-gray-300"
                     ></Avatar>
                     <span className="capitalize">{user.name}</span>
