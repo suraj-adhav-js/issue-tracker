@@ -1,10 +1,9 @@
 "use client";
 import { Skeleton } from "@/app/components";
 import { User } from "@/app/generated/prisma/client";
-import { Avatar, Box, Card, Flex, Select } from "@radix-ui/themes";
+import { Avatar, Card, Flex, Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { PiUserCircleDashedLight } from "react-icons/pi";
 
 const SelectUser = () => {
@@ -57,7 +56,7 @@ const SelectUser = () => {
                   <span>Unassigned</span>
                 </div>
               </Select.Item>
-              {users.map((user) => {
+              {users?.map((user) => {
                 return (
                   <Select.Item key={user.id} value={user.id}>
                     <div className="flex items-center gap-2">

@@ -96,7 +96,7 @@ const AuthStatus = () => {
         <Avatar
           size={"2"}
           radius="full"
-          src={session!.user!.image!}
+          src={session?.user?.image!}
           fallback="?"
         />
       </DropdownMenu.Trigger>
@@ -104,16 +104,16 @@ const AuthStatus = () => {
         <Flex gap="3" align="center" className="p-2  ">
           <Avatar
             size="3"
-            src={session!.user!.image!}
+            src={session?.user?.image!}
             radius="full"
             fallback="T"
           />
           <Box>
             <Text as="div" size="2" weight="bold">
-              {session!.user!.name}
+              {session?.user?.name}
             </Text>
             <Text as="div" size="2" color="gray">
-              {session!.user!.email}
+              {session?.user?.email}
             </Text>
           </Box>
         </Flex>
