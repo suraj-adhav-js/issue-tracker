@@ -31,7 +31,9 @@ export async function PATCH(request: NextRequest, { params }: Props) {
 
   const { title, description, assignedToUserId } = body;
   if (assignedToUserId) {
-    const user = await prisma.user.findUnique({ where: { id: assignedToUserId } });
+    const user = await prisma.user.findUnique({
+      where: { id: assignedToUserId },
+    });
 
     if (!user)
       return NextResponse.json({ error: "Invalid User" }, { status: 404 });
@@ -39,7 +41,11 @@ export async function PATCH(request: NextRequest, { params }: Props) {
 
   const updatedIssue = await prisma.issue.update({
     where: { id: Number(id) },
-    data: { title, description, assignedToUserId },
+    data: {
+      title,
+      description,
+      assignedToUserId,
+    },
   });
 
   return NextResponse.json(updatedIssue);
@@ -57,7 +63,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
   });
 
   if (!issue)
-    return NextResponse.json({ error: "Invalid issue" }, { status: 404});
+    return NextResponse.json({ error: "Invalid issue" }, { status: 404 });
 
   await prisma.issue.delete({
     where: { id: Number(id) },

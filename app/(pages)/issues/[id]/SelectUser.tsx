@@ -1,12 +1,12 @@
 "use client";
 import { Skeleton } from "@/app/components";
-import { User } from "@/app/generated/prisma/client";
+import { Issue, User } from "@/app/generated/prisma/client";
 import { Avatar, Card, Flex, Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { PiUserCircleDashedLight } from "react-icons/pi";
 
-const SelectUser = () => {
+const SelectUser = ({ issue }: { issue: Issue }) => {
   const {
     data: users,
     error,
@@ -40,13 +40,20 @@ const SelectUser = () => {
     <Card size="3">
       <Flex direction="column">
         <h3 className="mb-3">Assignee</h3>
-        <Select.Root defaultValue="null">
+        <Select.Root
+          defaultValue={issue.assignedToUserId || " "}
+          onValueChange={(user) =>
+            axios.patch("/api/issues/" + issue.id, {
+              assignedToUserId: user || null,
+            })
+          }
+        >
           <Select.Trigger />
           <Select.Content position="popper">
             <Select.Group>
               <Select.Label className="p-0 m-0">Suggestion</Select.Label>
               <Select.Separator />
-              <Select.Item value="null">
+              <Select.Item value=" ">
                 <div className="flex flex-row gap-2 items-center">
                   <PiUserCircleDashedLight
                     color="gray"

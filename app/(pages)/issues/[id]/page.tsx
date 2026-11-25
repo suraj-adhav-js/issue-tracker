@@ -28,7 +28,7 @@ const IssueDetailPage = async ({ params }: Props) => {
         </div>
         <div className="flex-3/10 flex flex-col gap-3">
           <IssueDetailCard issue={issue} />
-          <SelectUser/>
+          <SelectUser issue={issue}/>
         </div>
       </article>
     </div>
