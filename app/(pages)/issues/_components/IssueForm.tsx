@@ -9,14 +9,14 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { BiSolidError } from "react-icons/bi";
 import z from "zod";
-import { IssueSchema } from "../../../validationSchema";
+import { issueSchema } from "../../../validationSchema";
 import { Issue } from "@/app/generated/prisma/client";
 import { useRouter } from "next/navigation";
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-type IssueFormDate = z.infer<typeof IssueSchema>;
+type IssueFormDate = z.infer<typeof issueSchema>;
 
 interface Props {
   issue?: Issue;
@@ -33,7 +33,7 @@ const IssueForm = ({ issue }: Props) => {
     formState: { errors, isSubmitSuccessful, isSubmitting, isSubmitted },
     control,
   } = useForm<IssueFormDate>({
-    resolver: zodResolver(IssueSchema),
+    resolver: zodResolver(issueSchema),
     defaultValues: {
       title: issue === undefined ? "" : issue.title,
       description: issue === undefined ? "" : issue.description,

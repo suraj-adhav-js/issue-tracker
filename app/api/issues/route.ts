@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import prisma from "@/prisma/client";
-import { IssueSchema } from "../../validationSchema";
+import { issueSchema } from "../../validationSchema";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
 
@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
   if (!sesssion) return NextResponse.json({}, { status: 401 });
   const body = await request.json();
 
-  const validation = IssueSchema.safeParse(body);
+  const validation = issueSchema.safeParse(body);
 
   if (!validation.success) {
     return NextResponse.json(z.treeifyError(validation.error), { status: 400 });

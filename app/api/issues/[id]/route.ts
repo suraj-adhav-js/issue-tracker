@@ -1,6 +1,7 @@
 import authOptions from "@/app/auth/authOptions";
-import { IssueSchema } from "@/app/validationSchema";
+import { issueSchema, patchIssueSchema } from "@/app/validationSchema";
 import prisma from "@/prisma/client";
+import { error } from "console";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
@@ -12,11 +13,12 @@ interface Props {
 export async function PATCH(request: NextRequest, { params }: Props) {
   const sesssion = await getServerSession(authOptions);
   if (!sesssion) return NextResponse.json({}, { status: 401 });
+
   const { id } = await params;
 
   const body = await request.json();
 
-  const validation = IssueSchema.safeParse(body);
+  const validation = patchIssueSchema.safeParse(body);
 
   if (!validation.success)
     return NextResponse.json(z.treeifyError(validation.error), { status: 400 });
@@ -25,11 +27,19 @@ export async function PATCH(request: NextRequest, { params }: Props) {
     where: { id: Number(id) },
   });
 
-  if (!issue) return NextResponse.json("Issue invalid", { status: 400 });
+  if (!issue) return NextResponse.json("Issue invalid", { status: 404 });
+
+  const { title, description, assignedToUserId } = body;
+  if (assignedToUserId) {
+    const user = await prisma.user.findUnique({ where: { id: assignedToUserId } });
+
+    if (!user)
+      return NextResponse.json({ error: "Invalid User" }, { status: 404 });
+  }
 
   const updatedIssue = await prisma.issue.update({
     where: { id: Number(id) },
-    data: { title: body.title, description: body.description },
+    data: { title, description, assignedToUserId },
   });
 
   return NextResponse.json(updatedIssue);
@@ -47,7 +57,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
   });
 
   if (!issue)
-    return NextResponse.json({ error: "Invalid issue" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid issue" }, { status: 404});
 
   await prisma.issue.delete({
     where: { id: Number(id) },
