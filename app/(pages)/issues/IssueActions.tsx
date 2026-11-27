@@ -1,14 +1,25 @@
 import { Button } from "@radix-ui/themes";
 import Link from "next/link";
 import { MdAdd } from "react-icons/md";
+import { Select } from "@radix-ui/themes";
 import IssueStatusFilter from "./IssueStatusFilter";
+import { Suspense } from "react";
 
 const IssueActions = () => {
   return (
     <div className="flex justify-between mb-3">
       <h1 className="text-3xl">Issues</h1>
       <div className="flex gap-2">
-        <IssueStatusFilter />
+        <Suspense
+          fallback={
+            <Select.Root>
+              {" "}
+              <Select.Trigger placeholder="Select A Filter" />
+            </Select.Root>
+          }
+        >
+          <IssueStatusFilter />
+        </Suspense>
         <Button asChild>
           <span className="gap-1!">
             <MdAdd fontWeight="800" fontSize={18} className="pr-[-10px]" />
