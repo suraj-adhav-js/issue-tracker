@@ -28,7 +28,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
 
   return (
     <Theme accentColor="gray" asChild>
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-5">
         <div className="flex gap-2 items-center">
           <Button
             variant="outline"

@@ -7,18 +7,20 @@ import Link from "next/link";
 import { connection } from "next/server";
 import { Status } from "@/app/generated/prisma/enums";
 import { Issue } from "@/app/generated/prisma/client";
+import Pagination from "@/app/components/Pagination";
 
 interface Props {
   searchParams: Promise<{
     status?: Status;
     orderBy?: keyof Issue;
     order: "asc" | "desc";
+    page: string;
   }>;
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {
   await connection();
-  const { status, orderBy, order } = await searchParams;
+  const { status, orderBy, order, page } = await searchParams;
 
   const columns = [
     { label: "Issue Name", value: "title", className: "md:flex-1 " },
@@ -43,9 +45,19 @@ const IssuesPage = async ({ searchParams }: Props) => {
     ? { [orderBy as keyof Issue]: validOrder }
     : undefined;
 
+  const pageSize = 10;
+  const curretPage = Number(page) || 1;
+  const where = { status: validStatus };
+
   const issues = await prisma.issue.findMany({
-    where: { status: validStatus },
+    where,
     orderBy: validOrderBy,
+    skip: (curretPage - 1) * pageSize,
+    take: pageSize,
+  });
+
+  const itemCount = await prisma.issue.count({
+    where,
   });
 
   return (
@@ -59,9 +71,10 @@ const IssuesPage = async ({ searchParams }: Props) => {
               //checking active column
               const isActive = column.value === orderBy;
 
-              //if col url has asc converting to desc vice versa
+              //If col url has asc converting to desc vice versa
               let nextOrder = "asc";
-              if (isActive && validOrder === "asc") {  //this block only going to run when isActive is true
+              if (isActive && validOrder === "asc") {
+                //This block only going to run when isActive is true
                 nextOrder = "desc";
               }
 
@@ -115,6 +128,11 @@ const IssuesPage = async ({ searchParams }: Props) => {
           })}
         </Table.Body>
       </Table.Root>
+      <Pagination
+        currentPage={curretPage}
+        pageSize={pageSize}
+        itemCount={itemCount}
+      />
     </>
   );
 };
