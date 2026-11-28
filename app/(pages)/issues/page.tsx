@@ -60,8 +60,10 @@ const IssuesPage = async ({ searchParams }: Props) => {
               const isActive = column.value === orderBy;
 
               //if col url has asc converting to desc vice versa
-              const nextOrder =
-                isActive && validOrder === "asc" ? "desc" : "asc";
+              let nextOrder = "asc";
+              if (isActive && validOrder === "asc") {  //this block only going to run when isActive is true
+                nextOrder = "desc";
+              }
 
               return (
                 <Table.ColumnHeaderCell
